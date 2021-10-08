@@ -1,7 +1,6 @@
 ---
 AWSTemplateFormatVersion: 2010-09-09
-Description: Load Balancer backed by Auto scaling group.
-
+Description: T2.micro Launch template
 Parameters:
   VPC:
     Type: AWS::EC2::VPC::Id
