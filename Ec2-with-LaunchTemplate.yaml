@@ -42,13 +42,13 @@ Resources:
       LaunchTemplateName: MyLaunchTemplate
       LaunchTemplateData: 
         #if You want extra EBS volume
-        BlockDeviceMappings:
-          - DeviceName: /dev/xvdcz 
-            Ebs:
-              DeleteOnTermination: true
-              Encrypted: true
-              VolumeSize: 8
-              VolumeType: gp2
+        # BlockDeviceMappings:
+        #   - DeviceName: /dev/xvdcz 
+        #     Ebs:
+        #       DeleteOnTermination: true
+        #       Encrypted: true
+        #       VolumeSize: 8
+        #       VolumeType: gp2
         ImageId: ami-087c17d1fe0178315
         InstanceType: t2.micro
         KeyName: demo-virginia
@@ -67,4 +67,12 @@ Resources:
               yum install -y httpd
               systemctl start httpd
               systemctl enable httpd
-              echo "<h1>Hello World from $(hostname -f)</h1>" > /var/www/html/index.html  
+              echo "<h1>Hello World from $(hostname -f)</h1>" > /var/www/html/index.html 
+  
+  Myec2instance:
+    Type: AWS::EC2::Instance
+    Properties: 
+      LaunchTemplate:
+        LaunchTemplateId: !Ref myLaunchTemplate
+        LaunchTemplateName: String
+        Version: 1
