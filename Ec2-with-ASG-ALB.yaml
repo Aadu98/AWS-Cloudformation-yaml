@@ -9,6 +9,8 @@ Parameters:
   Subnets:
     Description: Choose which subnets the Application Load Balancer should be deployed to
     Type: List<AWS::EC2::Subnet::Id>
+  CPUPolicyTargetValue:
+    Type: String
 
 Resources:
   #Creating Separate SSH security group for SSHing to the instances.
@@ -127,3 +129,13 @@ Resources:
       DefaultActions:
         - Type: forward
           TargetGroupArn: !Ref DefaultTargetGroup
+  
+  myCPUPolicy:
+    Type: AWS::AutoScaling::ScalingPolicy
+    Properties:
+      AutoScalingGroupName: !Ref MYASG
+      PolicyType: TargetTrackingScaling
+      TargetTrackingConfiguration:
+        PredefinedMetricSpecification:
+          PredefinedMetricType: ASGAverageCPUUtilization
+        TargetValue: !Ref CPUPolicyTargetValue
